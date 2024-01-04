@@ -1,17 +1,15 @@
 <template>
-  <create-account></create-account>
-  <user-login></user-login>
+  <the-header></the-header>
+  <router-view></router-view>
 </template>
 
 <script>
-import CreateAccount from "./components/CreateAccount.vue";
-import UserLogin from "./components/UserLogin.vue";
+import TheHeader from "./components/layouts/TheHeader.vue";
 
 export default {
   name: "App",
   components: {
-    CreateAccount,
-    UserLogin,
+    TheHeader,
   },
 };
 </script>
