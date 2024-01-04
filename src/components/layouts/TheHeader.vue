@@ -4,15 +4,26 @@
       <h1>Find Coach</h1>
     </div>
     <div class="col-3">
-      <router-link to="/auth">
-        <button type="button">Auth</button>
-      </router-link>
+      <div v-if="isLoggedIn">
+        <h6>LOGGED IN</h6>
+      </div>
+      <div v-else>
+        <router-link to="/auth">
+          <button type="button">Auth</button>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.auth.isLoggedIn;
+    },
+  },
+};
 </script>
 
 <style scoped>

@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
@@ -18,21 +20,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auth", ["loginUser"]),
     login() {
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAT4a9hGBaASIC6wlCj3W1RKToSkeVD-PI",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-            retourSecureToken: true,
-          }),
-        }
-      ).then((response) => {
-        const responseData = response.json();
-        console.log(responseData);
-      });
+      this.loginUser({ email: this.email, password: this.password });
     },
   },
 };
