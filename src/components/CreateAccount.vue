@@ -6,13 +6,13 @@
         type="email"
         name="email"
         id="email"
-        v-model="formGroup.email.value"
-        @blur="formGroup.email.isBlured = true"
+        v-model="form.email.value"
+        @blur="form.email.isBlured = true"
         class="form-control"
         placeholder="Enter Email"
       />
       <small
-        v-show="this.formGroup.email.isBlured && !isEmailInputValid"
+        v-show="this.form.email.isBlured && !isEmailInputValid"
         class="text-danger"
         >*Email format is not respected</small
       >
@@ -23,16 +23,15 @@
         type="password"
         name="password"
         id="password"
-        v-model="formGroup.password.value"
-        @blur="formGroup.password.isBlured = true"
+        v-model="form.password.value"
+        @blur="form.password.isBlured = true"
         class="form-control"
         placeholder="Enter Password"
       />
       <small
-        v-show="this.formGroup.password.isBlured && !isPasswordInputValid"
+        v-show="this.form.password.isBlured && !isPasswordInputValid"
         class="text-danger"
-        >*Password field is required and length must be equal or higher then 6
-        caracters</small
+        >*Password field length must be equal or higher then 6 caracters</small
       >
     </div>
     <div class="form-group">
@@ -43,13 +42,11 @@
         id="confirmPassword"
         placeholder="Confirm Password"
         class="form-control"
-        v-model="formGroup.confirmPassword.value"
-        @blur="formGroup.confirmPassword.isBlured = true"
+        v-model="form.confirmPassword.value"
+        @blur="form.confirmPassword.isBlured = true"
       />
       <small
-        v-show="
-          this.formGroup.confirmPassword.isBlured && !isConfirmPasswordValid
-        "
+        v-show="this.form.confirmPassword.isBlured && !isConfirmPasswordValid"
         class="text-danger"
         >*Entered value is different from entered password</small
       >
@@ -66,7 +63,7 @@ import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      formGroup: {
+      form: {
         email: {
           value: "",
           isBlured: false,
@@ -86,17 +83,15 @@ export default {
     isEmailInputValid() {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return (
-        this.formGroup.email.value.trim().length > 0 &&
-        emailRegex.test(this.formGroup.email.value)
+        this.form.email.value.trim().length > 0 &&
+        emailRegex.test(this.form.email.value)
       );
     },
     isPasswordInputValid() {
-      return this.formGroup.password.value.length >= 6;
+      return this.form.password.value.length >= 6;
     },
     isConfirmPasswordValid() {
-      return (
-        this.formGroup.confirmPassword.value === this.formGroup.password.value
-      );
+      return this.form.confirmPassword.value === this.form.password.value;
     },
     isFormValid() {
       return (
@@ -110,8 +105,8 @@ export default {
     ...mapActions("auth", ["createAccount"]),
     createNewAccount() {
       this.createAccount({
-        email: this.formGroup.email.value,
-        password: this.formGroup.password.value,
+        email: this.form.email.value,
+        password: this.form.password.value,
       });
     },
   },
