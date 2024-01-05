@@ -1,8 +1,16 @@
-import axios from "axios";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { auth } from "@/firebase";
 
 export default {
   async loginUser(context, data) {
-    axios
+    signInWithEmailAndPassword(auth, data.email, data.password).then(() => {
+      context.commit("setIsLoggedIn", true);
+    });
+    /* axios
       .post(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAT4a9hGBaASIC6wlCj3W1RKToSkeVD-PI",
         {
@@ -23,10 +31,13 @@ export default {
           });
           context.commit("setIsLoggedIn", true);
         }
-      });
+      }); */
   },
   async createAccount(context, data) {
-    axios
+    createUserWithEmailAndPassword(auth, data.email, data.password).then(() => {
+      context.commit("setIsLoggedIn", true);
+    });
+    /* axios
       .post(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT4a9hGBaASIC6wlCj3W1RKToSkeVD-PI",
         {
@@ -47,17 +58,19 @@ export default {
           });
           context.commit("setIsLoggedIn", true);
         }
-      });
+      }); */
   },
   logOutUser(context) {
-    context.commit("setLoginInfos", {
+    /* context.commit("setLoginInfos", {
       idToken: null,
       email: null,
       refreshToken: null,
       expiresIn: null,
       localId: null,
       registered: null,
+    }); */
+    signOut(auth).then(() => {
+      context.commit("setIsLoggedIn", false);
     });
-    context.commit("setIsLoggedIn", false);
   },
 };
