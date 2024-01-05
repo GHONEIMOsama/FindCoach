@@ -164,7 +164,9 @@ export default {
       return (
         this.isEmailInputValid &&
         this.isPasswordInputValid &&
-        this.isConfirmPasswordValid
+        this.isConfirmPasswordValid &&
+        this.isNameInputValid &&
+        this.isLastNameInputValid
       );
     },
   },
