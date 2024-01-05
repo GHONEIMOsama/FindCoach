@@ -11,6 +11,7 @@
 
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -19,27 +20,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions("auth", ["createAccount"]),
     createNewAccount() {
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT4a9hGBaASIC6wlCj3W1RKToSkeVD-PI",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-            returnSecureToken: true,
-          }),
-        }
-      )
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      this.createAccount({ email: this.email, password: this.password });
     },
   },
 };
