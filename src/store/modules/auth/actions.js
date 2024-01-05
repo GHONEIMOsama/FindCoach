@@ -49,4 +49,15 @@ export default {
         }
       });
   },
+  logOutUser(context) {
+    context.commit("setLoginInfos", {
+      idToken: null,
+      email: null,
+      refreshToken: null,
+      expiresIn: null,
+      localId: null,
+      registered: null,
+    });
+    context.commit("setIsLoggedIn", false);
+  },
 };

@@ -1,11 +1,13 @@
 <template>
   <div class="row bg-violet">
     <div class="col-9">
-      <h1>Find Coach</h1>
+      <router-link to="/coaches">
+        <h1>Find Coach</h1>
+      </router-link>
     </div>
     <div class="col-3">
       <div v-if="isLoggedIn">
-        <h6>LOGGED IN</h6>
+        <button type="button" @click="logOutUser">LOG OUT</button>
       </div>
       <div v-else>
         <router-link to="/auth">
@@ -17,11 +19,15 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   computed: {
     isLoggedIn() {
       return this.$store.state.auth.isLoggedIn;
     },
+  },
+  methods: {
+    ...mapActions("auth", ["logOutUser"]),
   },
 };
 </script>
