@@ -101,6 +101,27 @@
       />
       <label for="isCoach" class="form-check-label">Register as a Coach</label>
     </div>
+    <div class="form-group" v-show="form.isCoach.value">
+      <label for="keyWords"
+        >What do you want to coach, Example : VueJS.
+        <span class="text-info">/!\ click Enter after each subject</span>
+      </label>
+      <input
+        type="text"
+        name="keyWords"
+        id="keyWords"
+        class="form-control"
+        placeholder="What do you want to coach"
+        v-model.trim="form.keyWords.value"
+        @keydown.enter="addNewKeyWord"
+      />
+      <div>
+        <span v-for="(keyWord, index) in keyWords" :key="index" class="m-3">
+          {{ keyWord }}
+          <span @click="removeKeyWord(index)" class="pointer">x</span>
+        </span>
+      </div>
+    </div>
     <button type="submit" class="btn btn-primary" :disabled="!isFormValid">
       Create
     </button>
@@ -137,8 +158,21 @@ export default {
         isCoach: {
           value: false,
         },
+        keyWords: {
+          value: "",
+        },
       },
+      keyWords: [],
     };
+  },
+  watch: {
+    "form.isCoach.value": function (newVal) {
+      if (newVal === false) {
+        console.log(this.form);
+        this.keyWords = [];
+        this.form.keyWords.value = "";
+      }
+    },
   },
   computed: {
     isEmailInputValid() {
@@ -176,8 +210,27 @@ export default {
       this.createAccount({
         email: this.form.email.value,
         password: this.form.password.value,
+        name: this.form.name.value,
+        lastName: this.form.lastName.value,
+        isCoach: this.form.isCoach.value,
+        keyWords: this.keyWords,
       });
+    },
+    addNewKeyWord() {
+      if (this.form.keyWords.value.length > 0) {
+        this.keyWords.push(this.form.keyWords.value);
+        this.form.keyWords.value = "";
+      }
+    },
+    removeKeyWord(index) {
+      this.keyWords.splice(index, 1);
     },
   },
 };
 </script>
+
+<style scoped>
+.pointer:hover {
+  cursor: pointer;
+}
+</style>

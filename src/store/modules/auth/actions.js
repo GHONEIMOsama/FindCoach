@@ -1,9 +1,10 @@
+import { auth, db } from "@/firebase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "@/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 export default {
   async loginUser(context, data) {
@@ -34,31 +35,18 @@ export default {
       }); */
   },
   async createAccount(context, data) {
-    createUserWithEmailAndPassword(auth, data.email, data.password).then(() => {
-      context.commit("setIsLoggedIn", true);
-    });
-    /* axios
-      .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAT4a9hGBaASIC6wlCj3W1RKToSkeVD-PI",
-        {
-          email: data.email,
-          password: data.password,
-          returnSecureToken: true,
-        }
-      )
-      .then((res) => {
-        if (res.status === 200) {
-          context.commit("setLoginInfos", {
-            idToken: res.data.idToken,
-            email: res.data.email,
-            refreshToken: res.data.refreshToken,
-            expiresIn: res.data.expiresIn,
-            localId: res.data.localId,
-            registered: res.data.registered,
-          });
+    createUserWithEmailAndPassword(auth, data.email, data.password).then(
+      (userCredentials) => {
+        setDoc(doc(db, "users", userCredentials.user.uid), {
+          name: data.name,
+          lastNAme: data.lastName,
+          isCoach: data.isCoach,
+          keyWords: data.keyWords,
+        }).then(() => {
           context.commit("setIsLoggedIn", true);
-        }
-      }); */
+        });
+      }
+    );
   },
   logOutUser(context) {
     /* context.commit("setLoginInfos", {
