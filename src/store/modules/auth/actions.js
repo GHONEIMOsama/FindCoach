@@ -26,7 +26,7 @@ export default {
       .then((userCredentials) => {
         setDoc(doc(db, "users", userCredentials.user.uid), {
           name: data.name,
-          lastNAme: data.lastName,
+          lastName: data.lastName,
           isCoach: data.isCoach,
           keyWords: data.keyWords,
         })
