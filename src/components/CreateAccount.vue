@@ -102,10 +102,7 @@
       <label for="isCoach" class="form-check-label">Register as a Coach</label>
     </div>
     <div class="form-group" v-show="form.isCoach.value">
-      <label for="keyWords"
-        >What do you want to coach, Example : VueJS.
-        <span class="text-info">/!\ click Enter after each subject</span>
-      </label>
+      <label for="keyWords">What do you want to coach, Example : VueJS </label>
       <input
         type="text"
         name="keyWords"
@@ -113,8 +110,10 @@
         class="form-control"
         placeholder="What do you want to coach"
         v-model.trim="form.keyWords.value"
-        @keydown.enter="addNewKeyWord"
       />
+      <button type="button" class="btn btn-primary" @click="addNewKeyWord">
+        Add
+      </button>
       <div>
         <span v-for="(keyWord, index) in keyWords" :key="index" class="m-3">
           {{ keyWord }}
