@@ -3,6 +3,9 @@
   <base-card v-for="coach in coaches" :key="coach.id">
     <h5 class="card-title">
       {{ coach.data.name + " " + coach.data.lastName }}
+      <router-link to="/contact">
+        <button type="button" class="btn btn-primary">Contact</button>
+      </router-link>
     </h5>
     <p class="card-text">
       <span
@@ -17,9 +20,14 @@
 
 <script>
 import BaseCard from "@/components/ui/BaseCard.vue";
+import { useToast } from "vue-toastification";
 import { mapActions } from "vuex";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   created() {
     this.listAllCoaches();
   },
@@ -32,11 +40,16 @@ export default {
   methods: {
     ...mapActions("coaches", ["getAllCoaches"]),
     listAllCoaches() {
-      this.getAllCoaches().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          this.coaches.push({ id: doc.id, data: doc.data() });
+      this.getAllCoaches()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            this.coaches.push({ id: doc.id, data: doc.data() });
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          this.toast.error("Couldn't fetch coaches for reason : ", error.code);
         });
-      });
     },
   },
 };
