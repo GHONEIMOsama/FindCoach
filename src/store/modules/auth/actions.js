@@ -31,6 +31,7 @@ export default {
           lastName: data.lastName,
           isCoach: data.isCoach,
           keyWords: data.keyWords,
+          email: data.email,
         })
           .then(() => {
             context.commit("setIsLoggedIn", true);
@@ -54,6 +55,7 @@ export default {
       .then(() => {
         context.commit("setIsLoggedIn", false);
         toast.success("SignOut success !", { timeout: 2000 });
+        router.push("/coaches");
       })
       .catch((error) => {
         console.error(error);
