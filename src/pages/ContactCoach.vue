@@ -1,5 +1,5 @@
 <template>
-  <h1>Contact Coach</h1>
+  <h1>Contact Coach : {{ coach?.name + " " + coach?.lastName }}</h1>
 </template>
 
 <script>
@@ -22,10 +22,11 @@ export default {
   methods: {
     ...mapActions("coaches", ["getCoachWithId"]),
     getCoachData() {
-      this.getCoachWithId("r2o5CkknD1gYK0qGNdx3uUmCEKf2")
+      this.getCoachWithId({ id: this.coachId })
         .then((docSnap) => {
           if (docSnap.exists()) {
             this.coach = docSnap.data();
+            console.log(this.coach);
           } else {
             this.toast.warning("Bad coach Id");
           }
