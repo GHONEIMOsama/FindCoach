@@ -21,7 +21,19 @@ const router = createRouter({
       },
     },
     { path: "/coaches", component: CoachesList },
-    { path: "/contact/:coachId", component: ContactCoach, props: true },
+    {
+      path: "/contact/:coachId",
+      component: ContactCoach,
+      props: true,
+      beforeEnter: (to, from, next) => {
+        console.log(auth.currentUser);
+        if (auth.currentUser !== null) {
+          next();
+        } else {
+          next("/coaches");
+        }
+      },
+    },
   ],
 });
 
