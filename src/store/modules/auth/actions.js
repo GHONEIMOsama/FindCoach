@@ -1,4 +1,5 @@
 import { auth, db } from "@/firebase";
+import router from "@/router";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -15,6 +16,7 @@ export default {
       .then(() => {
         context.commit("setIsLoggedIn", true);
         toast.success("Login success !", { timeout: 2000 });
+        router.push("/coaches");
       })
       .catch((error) => {
         console.error(error);
@@ -33,6 +35,7 @@ export default {
           .then(() => {
             context.commit("setIsLoggedIn", true);
             toast.success("Create Account success !", { timeout: 2000 });
+            router.push("/coaches");
           })
           .catch((error) => {
             console.error(error);
