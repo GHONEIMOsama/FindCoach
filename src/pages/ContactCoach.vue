@@ -1,6 +1,6 @@
 <template>
   <h1>Contact Coach : {{ coach?.name + " " + coach?.lastName }}</h1>
-  <form @submit.prevent="sendMessage">
+  <form @submit.prevent="sendMessageC">
     <div class="row">
       <div class="col">
         <div class="form-group">
@@ -39,8 +39,17 @@
         v-model="form.message.value"
         @blur="form.message.isBlured = true"
       ></textarea>
+      <small>{{ form.message.value.length }} / 1000</small>
+      <small v-if="isMessageEmpty" class="text-danger"
+        >Message can't be empty</small
+      >
+      <small v-if="isMessageReachedMaximumLength" class="text-danger"
+        >Message maximum length is 1000 caracters</small
+      >
     </div>
-    <button type="submit" class="btn btn-primary">Send</button>
+    <button type="submit" class="btn btn-primary" :disabled="isFormNotValid">
+      Send
+    </button>
   </form>
 </template>
 
@@ -80,9 +89,23 @@ export default {
     currentUser() {
       return auth.currentUser;
     },
+    isMessageEmpty() {
+      return this.form.message.isBlured && this.form.message.value.length === 0;
+    },
+    isMessageReachedMaximumLength() {
+      return this.form.message.value.length > 1000;
+    },
+    isFormNotValid() {
+      return (
+        !this.form.message.isBlured ||
+        this.isMessageEmpty ||
+        this.isMessageReachedMaximumLength
+      );
+    },
   },
   methods: {
     ...mapActions("coaches", ["getCoachWithId"]),
+    ...mapActions("msg", ["sendMessage"]),
     getCoachData() {
       this.getCoachWithId({ id: this.coachId })
         .then((docSnap) => {
@@ -102,7 +125,13 @@ export default {
           );
         });
     },
-    sendMessage() {},
+    sendMessageC() {
+      this.sendMessage({
+        from: this.form.from.value,
+        to: this.form.to.value,
+        message: this.form.message.value,
+      });
+    },
   },
 };
 </script>
