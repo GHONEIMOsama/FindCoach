@@ -26,7 +26,7 @@ import { auth } from "@/firebase";
 export default {
   computed: {
     isLoggedIn() {
-      return this.$store.state.auth.isLoggedIn;
+      return this.currentUser !== null || this.$store.state.auth.isLoggedIn;
     },
     currentUser() {
       return auth.currentUser;
