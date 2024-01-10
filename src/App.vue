@@ -1,6 +1,8 @@
 <template>
   <the-header></the-header>
-  <router-view></router-view>
+  <div class="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -13,3 +15,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.app {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
