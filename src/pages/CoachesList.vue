@@ -3,7 +3,7 @@
   <base-card v-for="coach in coaches" :key="coach.id">
     <h5 class="card-title">
       {{ coach.data.name + " " + coach.data.lastName }}
-      <router-link to="/contact">
+      <router-link :to="'/contact/' + coach.id">
         <button type="button" class="btn btn-primary">Contact</button>
       </router-link>
     </h5>
