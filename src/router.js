@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import AuthPage from "./pages/AuthPage.vue";
 import CoachesList from "./pages/CoachesList.vue";
 import ContactCoach from "./pages/ContactCoach";
+import MessagesList from "./pages/MessagesList";
+
 import { auth } from "./firebase";
 
 const router = createRouter({
@@ -26,7 +28,17 @@ const router = createRouter({
       component: ContactCoach,
       props: true,
       beforeEnter: (to, from, next) => {
-        console.log(auth.currentUser);
+        if (auth.currentUser !== null) {
+          next();
+        } else {
+          next("/coaches");
+        }
+      },
+    },
+    {
+      path: "/messages",
+      component: MessagesList,
+      beforeEnter: (to, from, next) => {
         if (auth.currentUser !== null) {
           next();
         } else {

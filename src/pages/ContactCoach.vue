@@ -110,7 +110,6 @@ export default {
         .then((docSnap) => {
           if (docSnap.exists()) {
             this.coach = docSnap.data();
-            console.log(this.coach);
             this.form.to.value = this.coach.email;
           } else {
             this.toast.warning("Bad coach Id");

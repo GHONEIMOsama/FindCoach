@@ -1,5 +1,5 @@
 import { useToast } from "vue-toastification";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, query, getDocs, where } from "firebase/firestore";
 import { db } from "@/firebase";
 
 const toast = useToast();
@@ -18,5 +18,12 @@ export default {
         console.error(error);
         toast.error("Message send failed for reason : ", error.code);
       });
+  },
+  getMessagesByEmail(_, data) {
+    const q = query(
+      collection(db, "messages"),
+      where(data.destination, "==", data.email)
+    );
+    return getDocs(q);
   },
 };
