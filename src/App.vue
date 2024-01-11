@@ -7,11 +7,21 @@
 
 <script>
 import TheHeader from "./components/layouts/TheHeader.vue";
+import { auth } from "@/firebase";
+import { mapMutations } from "vuex";
 
 export default {
   name: "App",
   components: {
     TheHeader,
+  },
+  created() {
+    auth.onAuthStateChanged((user) => {
+      this.setIsLoggedIn(user !== null);
+    });
+  },
+  methods: {
+    ...mapMutations("auth", ["setIsLoggedIn"]),
   },
 };
 </script>

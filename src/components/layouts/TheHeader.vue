@@ -1,13 +1,18 @@
 <template>
   <div class="row bg-violet">
-    <div class="col-9">
+    <div class="col-8">
       <router-link to="/coaches">
         <h1>Find Coach</h1>
       </router-link>
     </div>
+    <div class="col-1" v-if="isLoggedIn">
+      <router-link to="/messages">
+        <button type="button">Messages</button>
+      </router-link>
+    </div>
     <div class="col-3">
       <div v-if="isLoggedIn">
-        <div class="text-white">{{ currentUser.email }}</div>
+        <div class="text-white">{{ currentUser?.email }}</div>
         <button type="button" @click="logOutUser">LOG OUT</button>
       </div>
       <div v-else>
@@ -26,7 +31,7 @@ import { auth } from "@/firebase";
 export default {
   computed: {
     isLoggedIn() {
-      return this.currentUser !== null || this.$store.state.auth.isLoggedIn;
+      return this.$store.getters["auth/getIsLoggedIn"];
     },
     currentUser() {
       return auth.currentUser;
