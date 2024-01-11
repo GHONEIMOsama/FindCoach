@@ -97,9 +97,8 @@ export default {
     },
     isFormNotValid() {
       return (
-        !this.form.message.isBlured ||
-        this.isMessageEmpty ||
-        this.isMessageReachedMaximumLength
+        this.form.message.value.length === 0 ||
+        this.form.message.value.length > 1000
       );
     },
   },
