@@ -11,20 +11,11 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 
 export default {
-  loginUser(context, data) {
+  loginUser(_, data) {
     signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredentials) => {
-        context
-          .dispatch("getUserById", { id: userCredentials.user.uid })
-          .then((docSnap) => {
-            if (docSnap.exists()) {
-              context.commit("setLoginInfos", docSnap.data());
-              toast.success("Login success !", { timeout: 2000 });
-              router.push("/coaches");
-            } else {
-              this.toast.warning("Bad coach Id");
-            }
-          });
+      .then(() => {
+        toast.success("Login success !", { timeout: 2000 });
+        router.push("/coaches");
       })
       .catch((error) => {
         console.error(error);
