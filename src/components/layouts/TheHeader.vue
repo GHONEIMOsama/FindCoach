@@ -12,7 +12,7 @@
     </div>
     <div class="col-3">
       <div v-if="isLoggedIn">
-        <div class="text-white">{{ currentUser?.email }}</div>
+        <div class="text-white">{{ currentUserName }}</div>
         <button type="button" @click="logOutUser">LOG OUT</button>
       </div>
       <div v-else>
@@ -26,15 +26,18 @@
 
 <script>
 import { mapActions } from "vuex";
-import { auth } from "@/firebase";
 
 export default {
   computed: {
     isLoggedIn() {
       return this.$store.getters["auth/getIsLoggedIn"];
     },
-    currentUser() {
-      return auth.currentUser;
+    currentUserName() {
+      return (
+        this.$store.getters["auth/getLoginInfos"].name +
+        " " +
+        this.$store.getters["auth/getLoginInfos"].lastName
+      );
     },
   },
   methods: {

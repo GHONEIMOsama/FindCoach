@@ -10,6 +10,7 @@ export default {
       from: data.from,
       to: data.to,
       content: data.message,
+      date: data.date,
     })
       .then(() => {
         toast.success("Message Sent !", { timeout: 2000 });

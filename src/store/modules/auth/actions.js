@@ -5,36 +5,45 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
 export default {
-  async loginUser(context, data) {
+  loginUser(context, data) {
     signInWithEmailAndPassword(auth, data.email, data.password)
-      .then(() => {
-        context.commit("setIsLoggedIn", true);
-        toast.success("Login success !", { timeout: 2000 });
-        router.push("/coaches");
+      .then((userCredentials) => {
+        context
+          .dispatch("getUserById", { id: userCredentials.user.uid })
+          .then((docSnap) => {
+            if (docSnap.exists()) {
+              context.commit("setLoginInfos", docSnap.data());
+              toast.success("Login success !", { timeout: 2000 });
+              router.push("/coaches");
+            } else {
+              this.toast.warning("Bad coach Id");
+            }
+          });
       })
       .catch((error) => {
         console.error(error);
         toast.error("Login Failed for reason : " + error.code);
       });
   },
-  async createAccount(context, data) {
+  createAccount(context, data) {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredentials) => {
-        setDoc(doc(db, "users", userCredentials.user.uid), {
+        const userInfo = {
           name: data.name,
           lastName: data.lastName,
           isCoach: data.isCoach,
           keyWords: data.keyWords,
           email: data.email,
-        })
+        };
+        setDoc(doc(db, "users", userCredentials.user.uid), userInfo)
           .then(() => {
-            context.commit("setIsLoggedIn", true);
+            context.commit("setLoginInfos", userInfo);
             toast.success("Create Account success !", { timeout: 2000 });
             router.push("/coaches");
           })
@@ -50,10 +59,9 @@ export default {
         toast.error("Create account failed for reason : " + error.code);
       });
   },
-  logOutUser(context) {
+  logOutUser() {
     signOut(auth)
       .then(() => {
-        context.commit("setIsLoggedIn", false);
         toast.success("SignOut success !", { timeout: 2000 });
         router.push("/coaches");
       })
@@ -61,5 +69,9 @@ export default {
         console.error(error);
         toast.error("SignOut failed for reason : " + error.code);
       });
+  },
+  getUserById(_, data) {
+    const docRef = doc(db, "users", data.id);
+    return getDoc(docRef);
   },
 };

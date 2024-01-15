@@ -8,12 +8,11 @@ export default {
     return {
       isLoggedIn: false,
       loginInfos: {
-        idToken: "",
         email: "",
-        refreshToken: "",
-        expiresIn: "",
-        localId: "",
-        registered: "",
+        isCoach: undefined,
+        keyWords: [],
+        lastName: "",
+        name: "",
       },
     };
   },
