@@ -128,6 +128,7 @@ export default {
         from: this.form.from.value,
         to: this.form.to.value,
         message: this.form.message.value,
+        date: new Date(),
       });
     },
   },
