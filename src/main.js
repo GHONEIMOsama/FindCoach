@@ -18,10 +18,11 @@ import {
   faMessage,
   faPowerOff,
   faUser,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faUserSecret, faMessage, faPowerOff, faUser);
+library.add(faUserSecret, faMessage, faPowerOff, faUser, faPaperPlane);
 
 const app = createApp(App);
 

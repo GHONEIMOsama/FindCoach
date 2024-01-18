@@ -1,21 +1,27 @@
 <template>
-  <h1>Coaches List</h1>
-  <base-card v-for="coach in coaches" :key="coach.id">
-    <h5 class="card-title">
-      {{ coach.data.name + " " + coach.data.lastName }}
-      <router-link :to="'/contact/' + coach.id">
-        <button type="button" class="btn btn-primary">Contact</button>
-      </router-link>
-    </h5>
-    <p class="card-text">
-      <span
-        v-for="keyWord in coach.data.keyWords"
-        class="badge"
-        :key="keyWord"
-        >{{ keyWord }}</span
-      >
-    </p>
-  </base-card>
+  <div class="d-flex flex-row justify-content-center">
+    <h1 class="m-2">Coaches List</h1>
+  </div>
+  <div class="d-flex flex-row">
+    <div v-for="coach in coaches" :key="coach.id" class="m-2">
+      <base-card>
+        <h5 class="card-title">
+          {{ coach.data.name + " " + coach.data.lastName }}
+          <router-link :to="'/contact/' + coach.id">
+            <fa-icon icon="fa-solid fa-paper-plane" title="Send Message" />
+          </router-link>
+        </h5>
+        <p class="card-text">
+          <span
+            v-for="keyWord in coach.data.keyWords"
+            class="badge"
+            :key="keyWord"
+            >{{ keyWord }}</span
+          >
+        </p>
+      </base-card>
+    </div>
+  </div>
 </template>
 
 <script>
