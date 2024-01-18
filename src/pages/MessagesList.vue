@@ -1,7 +1,7 @@
 <template>
   <h1>Messages</h1>
   <div v-for="msg in messages" :key="msg.id">
-    {{ msg.content }}
+    {{ msg.data.content }}
   </div>
 </template>
 
@@ -17,7 +17,9 @@ export default {
   },
   created() {
     this.getMessagesByEmail({
-      destination: auth.currentUser.isCoach ? "to" : "from",
+      destination: this.$store.getters["auth/getLoginInfos"].isCoach
+        ? "to"
+        : "from",
       email: auth.currentUser.email,
     }).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
