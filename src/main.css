@@ -3,3 +3,7 @@
 .bg-violet {
     background-color: #3d008d;
 }
+
+.pointer {
+    cursor: pointer;
+}

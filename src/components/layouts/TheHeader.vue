@@ -1,25 +1,38 @@
 <template>
-  <div class="row bg-violet">
-    <div class="col-8">
+  <div class="d-flex bg-violet h-5rem align-items-center">
+    <div class="mr-auto p-2">
       <router-link to="/coaches">
-        <h1>Find Coach</h1>
+        <h1 class="text-white" title="Home Page">Find Coach</h1>
       </router-link>
     </div>
-    <div class="col-1" v-if="isLoggedIn">
-      <router-link to="/messages">
-        <button type="button">Messages</button>
-      </router-link>
+    <div class="p-2" v-if="isLoggedIn">
+      <div class="d-flex flex-row">
+        <div class="p-2">
+          <router-link to="/messages">
+            <fa-icon
+              icon="fa-solid fa-message"
+              class="fa-2x"
+              title="messages"
+            />
+          </router-link>
+        </div>
+        <div class="p-2">
+          <div class="text-white">{{ currentUserName }}</div>
+        </div>
+        <div class="p-2">
+          <fa-icon
+            icon="fa-solid fa-power-off"
+            class="text-white pointer fa-2x"
+            @click="logOutUser"
+            title="logOut"
+          />
+        </div>
+      </div>
     </div>
-    <div class="col-3">
-      <div v-if="isLoggedIn">
-        <div class="text-white">{{ currentUserName }}</div>
-        <button type="button" @click="logOutUser">LOG OUT</button>
-      </div>
-      <div v-else>
-        <router-link to="/auth">
-          <button type="button">Auth</button>
-        </router-link>
-      </div>
+    <div class="p-4" v-else>
+      <router-link to="/auth">
+        <fa-icon icon="fa-solid fa-user" class="fa-2x" title="Authentication" />
+      </router-link>
     </div>
   </div>
 </template>
@@ -47,4 +60,16 @@ export default {
 </script>
 
 <style scoped>
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.h-5rem {
+  height: 5rem;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
 </style>
