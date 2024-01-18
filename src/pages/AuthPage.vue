@@ -19,22 +19,28 @@
     />
     <label for="create-account">Create Account</label>
   </div>
-  <div v-if="chosenOption === 'login'">
-    <user-login></user-login>
-  </div>
-  <div v-else>
-    <create-account></create-account>
+  <div class="d-flex justify-content-center">
+    <base-card class="w-50">
+      <div v-if="chosenOption === 'login'">
+        <user-login></user-login>
+      </div>
+      <div v-else>
+        <create-account></create-account>
+      </div>
+    </base-card>
   </div>
 </template>
 
 <script>
 import CreateAccount from "@/components/CreateAccount.vue";
 import UserLogin from "@/components/UserLogin.vue";
+import BaseCard from "@/components/ui/BaseCard.vue";
 
 export default {
   components: {
     CreateAccount,
     UserLogin,
+    BaseCard,
   },
   data() {
     return {

@@ -6,14 +6,17 @@
         type="email"
         name="email"
         id="email"
-        class="form-control"
+        :class="{
+          'form-control': true,
+          'is-invalid': this.form.email.isBlured && !isEmailInputValid,
+        }"
         placeholder="Enter Email"
         v-model="form.email.value"
         @blur="form.email.isBlured = true"
       />
       <small
         v-show="this.form.email.isBlured && !isEmailInputValid"
-        class="text-danger"
+        class="invalid-feedback"
         >*Email format is not respected</small
       >
     </div>
@@ -23,21 +26,30 @@
         type="password"
         name="password"
         id="password"
-        class="form-control"
+        :class="{
+          'form-control': true,
+          'is-invalid': this.form.password.isBlured && !isPasswordInputValid,
+        }"
         placeholder="Enter Password"
         v-model="form.password.value"
         @blur="form.password.isBlured = true"
       />
       <small
         v-show="this.form.password.isBlured && !isPasswordInputValid"
-        class="text-danger"
+        class="invalid-feedback"
         >*Password field length must be equal or higher then 6 caracters</small
       >
     </div>
 
-    <button type="submit" class="btn btn-primary" :disabled="!isFormValid">
-      Login
-    </button>
+    <div class="d-flex flex-row-reverse">
+      <button
+        type="submit"
+        class="btn btn-primary my-2"
+        :disabled="!isFormValid"
+      >
+        Login
+      </button>
+    </div>
   </form>
 </template>
 
