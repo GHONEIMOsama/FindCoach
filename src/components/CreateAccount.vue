@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createNewAccount">
+  <form @submit.prevent="">
     <div class="row">
       <div class="col">
         <div class="form-group">
@@ -9,13 +9,16 @@
             name="name"
             id="name"
             placeholder="Enter Name"
-            class="form-control"
+            :class="{
+              'form-control': true,
+              'is-invalid': this.form.name.isBlured && !isNameInputValid,
+            }"
             v-model.trim="form.name.value"
             @blur="form.name.isBlured = true"
           />
           <small
             v-show="this.form.name.isBlured && !isNameInputValid"
-            class="text-danger"
+            class="invalid-feedback"
             >*Name format is not respected</small
           >
         </div>
@@ -28,13 +31,17 @@
             name="lastName"
             id="lastName"
             placeholder="Enter Last Name"
-            class="form-control"
+            :class="{
+              'form-control': true,
+              'is-invalid':
+                this.form.lastName.isBlured && !isLastNameInputValid,
+            }"
             v-model.trim="form.lastName.value"
             @blur="form.lastName.isBlured = true"
           />
           <small
             v-show="this.form.lastName.isBlured && !isLastNameInputValid"
-            class="text-danger"
+            class="invalid-feedback"
             >*Last Name format is not respected</small
           >
         </div>
@@ -48,12 +55,15 @@
         id="email"
         v-model.trim="form.email.value"
         @blur="form.email.isBlured = true"
-        class="form-control"
+        :class="{
+          'form-control': true,
+          'is-invalid': this.form.email.isBlured && !isEmailInputValid,
+        }"
         placeholder="Enter Email"
       />
       <small
         v-show="this.form.email.isBlured && !isEmailInputValid"
-        class="text-danger"
+        class="invalid-feedback"
         >*Email format is not respected</small
       >
     </div>
@@ -65,12 +75,15 @@
         id="password"
         v-model="form.password.value"
         @blur="form.password.isBlured = true"
-        class="form-control"
+        :class="{
+          'form-control': true,
+          'is-invalid': this.form.password.isBlured && !isPasswordInputValid,
+        }"
         placeholder="Enter Password"
       />
       <small
         v-show="this.form.password.isBlured && !isPasswordInputValid"
-        class="text-danger"
+        class="invalid-feedback"
         >*Password field length must be equal or higher then 6 caracters</small
       >
     </div>
@@ -81,17 +94,21 @@
         name="confirmPassword"
         id="confirmPassword"
         placeholder="Confirm Password"
-        class="form-control"
+        :class="{
+          'form-control': true,
+          'is-invalid':
+            this.form.confirmPassword.isBlured && !isConfirmPasswordValid,
+        }"
         v-model="form.confirmPassword.value"
         @blur="form.confirmPassword.isBlured = true"
       />
       <small
         v-show="this.form.confirmPassword.isBlured && !isConfirmPasswordValid"
-        class="text-danger"
+        class="invalid-feedback"
         >*Entered value is different from entered password</small
       >
     </div>
-    <div class="form-check">
+    <div class="form-check py-2">
       <input
         type="checkbox"
         name="isCoach"
@@ -103,17 +120,43 @@
     </div>
     <div class="form-group" v-show="form.isCoach.value">
       <label for="keyWords">What do you want to coach, Example : VueJS </label>
-      <input
-        type="text"
-        name="keyWords"
-        id="keyWords"
-        class="form-control"
-        placeholder="What do you want to coach"
-        v-model.trim="form.keyWords.value"
-      />
-      <button type="button" class="btn btn-primary" @click="addNewKeyWord">
-        Add
-      </button>
+      <div class="input-group">
+        <input
+          type="text"
+          name="keyWords"
+          id="keyWords"
+          class="form-control"
+          placeholder="What do you want to coach"
+          v-model.trim="form.keyWords.value"
+          @keydown.enter="addNewKeyWord"
+          aria-label="keyWords"
+          aria-describedby="keyWordsAdd"
+        />
+        <div class="input-group-append">
+          <button
+            class="input-group-text add-button"
+            id="keyWordsAdd"
+            @click="addNewKeyWord"
+          >
+            Add
+          </button>
+        </div>
+      </div>
+      <!-- <label for="keyWords">What do you want to coach, Example : VueJS </label>
+      <div class="d-flex">
+        <div class="pe-2">
+          <input
+            type="text"
+            name="keyWords"
+            id="keyWords"
+            class="form-control"
+            placeholder="What do you want to coach"
+            v-model.trim="form.keyWords.value"
+            @keydown.enter="addNewKeyWord"
+          />
+        </div>
+      </div> -->
+
       <div>
         <span v-for="(keyWord, index) in keyWords" :key="index" class="m-3">
           {{ keyWord }}
@@ -121,9 +164,16 @@
         </span>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" :disabled="!isFormValid">
-      Create
-    </button>
+    <div class="d-flex flex-row-reverse">
+      <button
+        type="submit"
+        class="btn btn-primary my-3"
+        :disabled="!isFormValid"
+        @click="createNewAccount"
+      >
+        Create
+      </button>
+    </div>
   </form>
 </template>
 
@@ -167,7 +217,6 @@ export default {
   watch: {
     "form.isCoach.value": function (newVal) {
       if (newVal === false) {
-        console.log(this.form);
         this.keyWords = [];
         this.form.keyWords.value = "";
       }
@@ -229,7 +278,7 @@ export default {
 </script>
 
 <style scoped>
-.pointer:hover {
-  cursor: pointer;
+.add-button {
+  border-radius: inherit;
 }
 </style>
