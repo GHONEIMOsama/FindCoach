@@ -14,7 +14,6 @@ const router = createRouter({
       path: "/auth",
       component: AuthPage,
       beforeEnter: (to, from, next) => {
-        console.log(auth.currentUser);
         if (auth.currentUser === null) {
           next();
         } else {
@@ -31,7 +30,7 @@ const router = createRouter({
         if (auth.currentUser !== null) {
           next();
         } else {
-          next("/coaches");
+          next("/auth");
         }
       },
     },
@@ -42,7 +41,7 @@ const router = createRouter({
         if (auth.currentUser !== null) {
           next();
         } else {
-          next("/coaches");
+          next("/auth");
         }
       },
     },
