@@ -1,5 +1,12 @@
 import { useToast } from "vue-toastification";
-import { collection, addDoc, query, getDocs, where } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  getDocs,
+  where,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 
 const toast = useToast();
@@ -23,7 +30,8 @@ export default {
   getMessagesByEmail(_, data) {
     const q = query(
       collection(db, "messages"),
-      where(data.destination, "==", data.email)
+      where(data.destination, "==", data.email),
+      orderBy("date", "desc")
     );
     return getDocs(q);
   },
