@@ -88,6 +88,9 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["loginUser"]),
+    /**
+     * Login.
+     */
     login() {
       this.loginUser({
         email: this.form.email.value,

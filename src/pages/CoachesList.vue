@@ -47,6 +47,9 @@ export default {
   components: { BaseCard, BaseKeyWords },
   methods: {
     ...mapActions("coaches", ["getAllCoaches"]),
+    /**
+     * Get All coaches in the databse to be listed.
+     */
     listAllCoaches() {
       this.getAllCoaches()
         .then((querySnapshot) => {

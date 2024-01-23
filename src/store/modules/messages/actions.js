@@ -12,6 +12,11 @@ import { db } from "@/firebase";
 const toast = useToast();
 
 export default {
+  /**
+   * Send Message.
+   * @param {*} _
+   * @param {*} data
+   */
   sendMessage(_, data) {
     addDoc(collection(db, "messages"), {
       from: data.from,
@@ -27,6 +32,12 @@ export default {
         toast.error("Message send failed for reason : ", error.code);
       });
   },
+  /**
+   * Get Message by Email.
+   * @param {*} _
+   * @param {*} data
+   * @returns
+   */
   getMessagesByEmail(_, data) {
     const q = query(
       collection(db, "messages"),

@@ -243,6 +243,9 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["createAccount"]),
+    /**
+     * Create a new account.
+     */
     createNewAccount() {
       this.createAccount({
         email: this.form.email.value,
@@ -253,6 +256,9 @@ export default {
         keyWords: this.keyWords,
       });
     },
+    /**
+     * Append a new keyword into the lists of leyWords
+     */
     addNewKeyWord() {
       if (
         this.form.keyWords.value.length > 0 &&
@@ -262,6 +268,10 @@ export default {
         this.form.keyWords.value = "";
       }
     },
+    /**
+     * Remove the keyWord from the keyWords array with index index
+     * @param {*} index
+     */
     removeKeyWord(index) {
       this.keyWords.splice(index, 1);
     },

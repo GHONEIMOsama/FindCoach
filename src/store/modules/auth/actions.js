@@ -11,6 +11,11 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 
 export default {
+  /**
+   * Login using email and password.
+   * @param {*} _
+   * @param {*} data
+   */
   loginUser(_, data) {
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then(() => {
@@ -22,6 +27,11 @@ export default {
         toast.error("Login Failed for reason : " + error.code);
       });
   },
+  /**
+   * Create an account using email and password.
+   * @param {*} context
+   * @param {*} data
+   */
   createAccount(context, data) {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredentials) => {
@@ -50,6 +60,9 @@ export default {
         toast.error("Create account failed for reason : " + error.code);
       });
   },
+  /**
+   * LogOut User.
+   */
   logOutUser() {
     signOut(auth)
       .then(() => {
@@ -61,6 +74,12 @@ export default {
         toast.error("SignOut failed for reason : " + error.code);
       });
   },
+  /**
+   * Get user by it's id.
+   * @param {*} _
+   * @param {*} data
+   * @returns
+   */
   getUserById(_, data) {
     const docRef = doc(db, "users", data.id);
     return getDoc(docRef);

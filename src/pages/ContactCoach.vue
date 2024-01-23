@@ -112,6 +112,9 @@ export default {
   methods: {
     ...mapActions("auth", ["getUserById"]),
     ...mapActions("msg", ["sendMessage"]),
+    /**
+     * Get the informations of the coach with the given coachId passed in the url.
+     */
     getCoachData() {
       this.getUserById({ id: this.coachId })
         .then((docSnap) => {
@@ -130,6 +133,9 @@ export default {
           );
         });
     },
+    /**
+     * Send a message to the coach with id coachId.
+     */
     sendMessageC() {
       this.sendMessage({
         from: this.form.from.value,

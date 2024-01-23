@@ -19,6 +19,10 @@ export default {
     },
   },
   methods: {
+    /**
+     * Send event 'remove-index' to remove keyWord with index index.
+     * @param {*} index the index of the keyWord to remove.
+     */
     removeKeyWord(index) {
       this.$emit("remove-index", index);
     },
