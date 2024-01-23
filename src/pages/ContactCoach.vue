@@ -29,27 +29,34 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Message</label>
+    <div class="form-group mb-2">
+      <label for="message">Message</label>
       <textarea
-        class="form-control"
         id="message"
         name="message"
         rows="10"
         v-model="form.message.value"
         @blur="form.message.isBlured = true"
+        :class="{
+          'form-control': true,
+          'is-invalid':
+            this.form.message.isBlured &&
+            (isMessageEmpty || isMessageReachedMaximumLength),
+        }"
       ></textarea>
       <small>{{ form.message.value.length }} / 1000</small>
-      <small v-if="isMessageEmpty" class="text-danger"
-        >Message can't be empty</small
+      <small v-if="isMessageEmpty" class="invalid-feedback"
+        >*Message can't be empty</small
       >
-      <small v-if="isMessageReachedMaximumLength" class="text-danger"
-        >Message maximum length is 1000 caracters</small
+      <small v-if="isMessageReachedMaximumLength" class="invalid-feedback"
+        >*Message maximum length is 1000 caracters</small
       >
     </div>
-    <button type="submit" class="btn btn-primary" :disabled="isFormNotValid">
-      Send
-    </button>
+    <div class="d-flex flex-row-reverse">
+      <button type="submit" class="btn btn-primary" :disabled="isFormNotValid">
+        Send
+      </button>
+    </div>
   </form>
 </template>
 
