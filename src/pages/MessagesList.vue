@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { auth } from "@/firebase";
 import { mapActions } from "vuex";
 import BaseCard from "@/components/ui/BaseCard.vue";
 
@@ -36,7 +35,7 @@ export default {
       destination: this.$store.getters["auth/getLoginInfos"].isCoach
         ? "to"
         : "from",
-      email: auth.currentUser.email,
+      email: this.$store.getters["auth/getLoginInfos"].email,
     }).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = doc.data();

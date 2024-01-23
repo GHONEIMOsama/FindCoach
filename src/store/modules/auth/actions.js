@@ -30,7 +30,7 @@ export default {
           lastName: data.lastName,
           isCoach: data.isCoach,
           keyWords: data.keyWords,
-          email: data.email,
+          email: userCredentials.user.email,
         };
         setDoc(doc(db, "users", userCredentials.user.uid), userInfo)
           .then(() => {
