@@ -7,7 +7,10 @@
       <base-card>
         <h5 class="card-title">
           {{ coach.data.name + " " + coach.data.lastName }}
-          <router-link :to="'/contact/' + coach.id">
+          <router-link
+            :to="'/contact/' + coach.id"
+            v-if="$store.getters['auth/getIsLoggedIn']"
+          >
             <fa-icon icon="fa-solid fa-paper-plane" title="Send Message" />
           </router-link>
         </h5>
