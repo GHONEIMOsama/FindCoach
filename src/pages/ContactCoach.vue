@@ -110,10 +110,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions("coaches", ["getCoachWithId"]),
+    ...mapActions("auth", ["getUserById"]),
     ...mapActions("msg", ["sendMessage"]),
     getCoachData() {
-      this.getCoachWithId({ id: this.coachId })
+      this.getUserById({ id: this.coachId })
         .then((docSnap) => {
           if (docSnap.exists()) {
             this.coach = docSnap.data();

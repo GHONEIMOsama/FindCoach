@@ -1,20 +1,13 @@
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/firebase";
 
 export default {
+  /**
+   * Get all coaches in the database.
+   * @returns Promise with all coaches data in the database.
+   */
   getAllCoaches() {
     const q = query(collection(db, "users"), where("isCoach", "==", true));
     return getDocs(q);
-  },
-  getCoachWithId(_, data) {
-    const docRef = doc(db, "users", data.id);
-    return getDoc(docRef);
   },
 };
