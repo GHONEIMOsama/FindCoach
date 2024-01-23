@@ -2,20 +2,19 @@
   <div class="d-flex flex-row justify-content-center">
     <h1 class="m-2">Messages</h1>
   </div>
-  <div class="d-flex flex-row">
-    <div v-for="msg in messages" :key="msg.id" class="m-2">
-      <base-card>
-        <h5 class="card-title">
-          <span v-if="$store.getters['auth/getLoginInfos'].isCoach">{{
-            msg.data.from
-          }}</span>
-          <span v-else>{{ msg.data.to }}</span>
-        </h5>
-        <p class="card-text">
-          {{ msg.data.content }}
-        </p>
-      </base-card>
-    </div>
+
+  <div v-for="msg in messages" :key="msg.id" class="m-2">
+    <base-card>
+      <h5 class="card-title">
+        <span v-if="$store.getters['auth/getLoginInfos'].isCoach">{{
+          msg.data.from
+        }}</span>
+        <span v-else>{{ msg.data.to }}</span>
+      </h5>
+      <p class="card-text">
+        {{ msg.data.content }}
+      </p>
+    </base-card>
   </div>
 </template>
 
