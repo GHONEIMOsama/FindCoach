@@ -142,26 +142,12 @@
           </button>
         </div>
       </div>
-      <!-- <label for="keyWords">What do you want to coach, Example : VueJS </label>
-      <div class="d-flex">
-        <div class="pe-2">
-          <input
-            type="text"
-            name="keyWords"
-            id="keyWords"
-            class="form-control"
-            placeholder="What do you want to coach"
-            v-model.trim="form.keyWords.value"
-            @keydown.enter="addNewKeyWord"
-          />
-        </div>
-      </div> -->
-
       <div>
-        <span v-for="(keyWord, index) in keyWords" :key="index" class="m-3">
-          {{ keyWord }}
-          <span @click="removeKeyWord(index)" class="pointer">x</span>
-        </span>
+        <base-key-words
+          :keyWords="keyWords"
+          :isReadOnlyMode="false"
+          @remove-index="removeKeyWord"
+        ></base-key-words>
       </div>
     </div>
     <div class="d-flex flex-row-reverse">
@@ -180,7 +166,10 @@
 
 <script>
 import { mapActions } from "vuex";
+import BaseKeyWords from "./ui/BaseKeyWords.vue";
+
 export default {
+  components: { BaseKeyWords },
   data() {
     return {
       form: {
@@ -265,7 +254,10 @@ export default {
       });
     },
     addNewKeyWord() {
-      if (this.form.keyWords.value.length > 0) {
+      if (
+        this.form.keyWords.value.length > 0 &&
+        this.keyWords.indexOf(this.form.keyWords.value) === -1
+      ) {
         this.keyWords.push(this.form.keyWords.value);
         this.form.keyWords.value = "";
       }

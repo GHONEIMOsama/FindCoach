@@ -12,12 +12,10 @@
           </router-link>
         </h5>
         <p class="card-text">
-          <span
-            v-for="keyWord in coach.data.keyWords"
-            class="badge"
-            :key="keyWord"
-            >{{ keyWord }}</span
-          >
+          <base-key-words
+            :keyWords="coach.data.keyWords"
+            :isReadOnlyMode="true"
+          ></base-key-words>
         </p>
       </base-card>
     </div>
@@ -26,6 +24,7 @@
 
 <script>
 import BaseCard from "@/components/ui/BaseCard.vue";
+import BaseKeyWords from "@/components/ui/BaseKeyWords.vue";
 import { useToast } from "vue-toastification";
 import { mapActions } from "vuex";
 
@@ -42,7 +41,7 @@ export default {
       coaches: [],
     };
   },
-  components: { BaseCard },
+  components: { BaseCard, BaseKeyWords },
   methods: {
     ...mapActions("coaches", ["getAllCoaches"]),
     listAllCoaches() {
@@ -60,12 +59,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.badge {
-  color: white;
-  background-color: blue;
-  border-radius: 5px;
-  margin: 5px;
-}
-</style>
