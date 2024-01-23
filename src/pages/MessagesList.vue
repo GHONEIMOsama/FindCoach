@@ -10,6 +10,7 @@
           msg.data.from
         }}</span>
         <span v-else>{{ msg.data.to }}</span>
+        <span class="ms-2 text-muted fs-small">{{ msg.data.date }}</span>
       </h5>
       <p class="card-text">
         {{ msg.data.content }}
@@ -38,7 +39,11 @@ export default {
       email: auth.currentUser.email,
     }).then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        this.messages.push({ id: doc.id, data: doc.data() });
+        const data = doc.data();
+        data.date = new Date(
+          data.date.seconds * 1000 + data.date.nanoseconds / 1e6
+        ).toLocaleString();
+        this.messages.push({ id: doc.id, data: data });
       });
     });
   },
@@ -47,3 +52,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.fs-small {
+  font-size: small;
+}
+</style>
